@@ -590,6 +590,29 @@
       background: rgba(255,210,26,0.08);
     }
 
+    /* ─── TÉMOIGNAGES ─── */
+    #testimonials {
+      padding: 8rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .testi-head { margin-bottom: 4rem; }
+    .testi-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+    .testi-card { background: var(--surface); padding: 2rem; }
+    .testi-quote { font-size: 0.98rem; color: var(--text); line-height: 1.8; font-style: italic; }
+    .testi-quote::before { content: '“'; color: var(--orange); font-size: 1.6rem; line-height: 0; vertical-align: -0.35em; margin-right: 0.2rem; }
+    .testi-author { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(26,107,255,0.14); border: 1px solid rgba(26,107,255,0.3);
+      color: var(--blue-light); font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
+    }
+    .testi-name { font-size: 0.92rem; font-weight: 600; }
+    .testi-role { font-size: 0.82rem; color: var(--text2); margin-top: 0.1rem; }
+
     /* ─── CONTACT ─── */
     #contact {
       padding: 8rem 3rem 6rem;
@@ -723,7 +746,7 @@
       .hero-meta { flex-direction: row; flex-wrap: wrap; gap: 1.25rem 2rem; }
       .hero-cta { flex-wrap: wrap; }
       #about { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
-      #skills, #experience, #projects, #contact { padding: 5rem 1.5rem; }
+      #skills, #experience, #projects, #testimonials, #contact { padding: 5rem 1.5rem; }
       .stat { padding: 1.5rem 1.25rem; }
       .timeline { padding-left: 1.5rem; }
       .timeline-item::before { left: calc(-1.5rem - 4px); }
@@ -1252,6 +1275,15 @@
   </div>
 </section>
 
+<!-- TÉMOIGNAGES (affichés seulement s'il y en a dans Supabase) -->
+<section id="testimonials" hidden>
+  <div class="testi-head">
+    <div class="section-eyebrow">Témoignages</div>
+    <h2 class="section-title">Ce qu'ils disent<br>de mon travail.</h2>
+  </div>
+  <div class="testi-grid"></div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner reveal">
@@ -1371,5 +1403,7 @@
     });
   }, { passive: true });
 </script>
+<script src="js/config.js"></script>
+<script src="js/site.js"></script>
 </body>
 </html>
