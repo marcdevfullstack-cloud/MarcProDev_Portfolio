@@ -12,756 +12,15 @@
   <meta property="og:site_name" content="MarcProDev" />
   <meta property="og:title" content="Marc-Aurèle Adou — Développeur Full-Stack Web & Mobile" />
   <meta property="og:description" content="Flutter · Laravel · Next.js. 3 ans d'expérience, 10+ projets livrés, 35 000+ utilisateurs. Ouvert aux opportunités CDI, freelance et remote." />
-  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="assets/og-image.png" />
+  <meta property="og:url" content="" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2303060f'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' font-size='38' fill='%23ff6b1a'%3EM%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <script>document.documentElement.classList.add('js');</script>
   <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #03060f;
-      --bg2: #060b1a;
-      --surface: #0a1128;
-      --surface2: #0d1535;
-      --border: #162040;
-      --border2: #1e2e58;
-
-      --blue: #1a6bff;
-      --blue-light: #4d8fff;
-      --blue-glow: rgba(26,107,255,0.18);
-
-      --orange: #ff6b1a;
-      --orange-light: #ff8a45;
-      --orange-glow: rgba(255,107,26,0.18);
-
-      --yellow: #ffd21a;
-      --yellow-light: #ffe566;
-      --yellow-glow: rgba(255,210,26,0.15);
-
-      --text: #eef2ff;
-      --text2: #8fa3d4;
-      --text3: #7d90bd;
-
-      --font-display: 'Clash Display', 'Space Grotesk', sans-serif;
-      --font-body: 'Space Grotesk', sans-serif;
-      --font-mono: 'DM Mono', monospace;
-
-      --radius: 4px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      overflow-x: hidden;
-    }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--yellow); outline-offset: 3px; }
-
-    /* ─── CURSOR (souris uniquement, et seulement si le JS tourne) ─── */
-    #cursor, #cursor-ring { display: none; }
-    @media (hover: hover) and (pointer: fine) {
-      .js body, .js a, .js button { cursor: none; }
-      .js #cursor, .js #cursor-ring { display: block; }
-    }
-    #cursor {
-      position: fixed; width: 10px; height: 10px;
-      background: var(--orange); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%,-50%);
-      transition: transform 0.1s, background 0.2s;
-      mix-blend-mode: screen;
-    }
-    #cursor-ring {
-      position: fixed; width: 40px; height: 40px;
-      border: 1.5px solid rgba(26,107,255,0.5);
-      border-radius: 50%; pointer-events: none; z-index: 9998;
-      transform: translate(-50%,-50%);
-    }
-    body:has(a:hover) #cursor { background: var(--yellow); transform: translate(-50%,-50%) scale(1.6); }
-    body:has(a:hover) #cursor-ring { border-color: var(--yellow); transform: translate(-50%,-50%) scale(1.2); }
-
-    /* ─── BACKGROUND ─── */
-    .bg-orb {
-      position: fixed; border-radius: 50%;
-      pointer-events: none; filter: blur(100px); z-index: 0;
-    }
-    .bg-orb-1 {
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(26,107,255,0.12) 0%, transparent 70%);
-      top: -200px; left: -100px;
-    }
-    .bg-orb-2 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(255,107,26,0.09) 0%, transparent 70%);
-      bottom: 10%; right: -100px;
-    }
-    .bg-orb-3 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(255,210,26,0.07) 0%, transparent 70%);
-      top: 50%; left: 30%;
-    }
-    .grid-bg {
-      position: fixed; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(26,107,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(26,107,255,0.04) 1px, transparent 1px);
-      background-size: 64px 64px;
-    }
-
-    /* ─── NAV ─── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.25rem 3rem;
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(24px) saturate(1.5);
-      background: rgba(3,6,15,0.75);
-    }
-    .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.1rem; font-weight: 700;
-      letter-spacing: -0.02em;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-    .nav-logo .dot { color: var(--orange); }
-    .nav-logo .badge {
-      font-family: var(--font-mono); font-size: 0.68rem;
-      font-weight: 400; padding: 0.15rem 0.5rem;
-      background: var(--blue-glow);
-      border: 1px solid rgba(26,107,255,0.3);
-      color: var(--blue-light); border-radius: 2px;
-      letter-spacing: 0.08em;
-    }
-    nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
-    nav a {
-      color: var(--text2); text-decoration: none;
-      font-size: 0.8rem; letter-spacing: 0.08em;
-      text-transform: uppercase; font-weight: 500;
-      transition: color 0.2s;
-    }
-    nav a:hover { color: var(--text); }
-    .nav-cv {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      background: linear-gradient(135deg, var(--orange), #ff4d00);
-      color: #fff !important; font-weight: 600 !important;
-      border-radius: var(--radius);
-      box-shadow: 0 0 20px rgba(255,107,26,0.3);
-      transition: all 0.2s !important;
-    }
-    .nav-cv:hover { transform: translateY(-2px); box-shadow: 0 4px 28px rgba(255,107,26,0.45) !important; }
-
-    /* ─── MENU MOBILE ─── */
-    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 8px; cursor: pointer; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); transition: all 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu {
-      display: none; position: fixed; inset: 0; z-index: 150;
-      background: rgba(3,6,15,0.97); backdrop-filter: blur(24px);
-      flex-direction: column; align-items: center; justify-content: center; gap: 1.75rem;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      font-family: var(--font-display); font-size: clamp(1.6rem, 7vw, 2.6rem);
-      font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: -0.02em;
-    }
-    .mobile-menu a:hover { color: var(--orange-light); }
-    .mobile-menu .mobile-cv { color: var(--orange-light); }
-
-    /* ─── SECTION WRAPPERS ─── */
-    section { position: relative; z-index: 1; }
-
-    /* ─── HERO ─── */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 7rem 3rem 4rem;
-      overflow: hidden;
-    }
-    .hero-availability {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: var(--font-mono); font-size: 0.74rem;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--blue-light);
-      padding: 0.35rem 0.9rem;
-      border: 1px solid rgba(26,107,255,0.3);
-      background: rgba(26,107,255,0.07);
-      border-radius: 2px; margin-bottom: 2.5rem;
-      width: fit-content;
-      animation: fadeUp 0.7s ease both;
-    }
-    .hero-availability .pulse {
-      width: 6px; height: 6px; background: #00e676;
-      border-radius: 50%; animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(0,230,118,0.5); }
-      50% { box-shadow: 0 0 0 6px rgba(0,230,118,0); }
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(4rem, 9vw, 9rem);
-      font-weight: 700;
-      line-height: 0.92;
-      letter-spacing: -0.04em;
-      animation: fadeUp 0.7s 0.08s ease both;
-    }
-    .hero-title .name-line {
-      display: block;
-      background: linear-gradient(135deg, #fff 0%, #c4d4ff 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-title .role-line {
-      display: block;
-      background: linear-gradient(135deg, var(--blue) 0%, var(--orange) 60%, var(--yellow) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-role {
-      margin-top: 1.75rem;
-      font-family: var(--font-display); font-weight: 600;
-      font-size: clamp(1.1rem, 2.2vw, 1.6rem); letter-spacing: -0.01em; line-height: 1.3;
-      animation: fadeUp 0.7s 0.12s ease both;
-    }
-    .hero-role span { color: var(--orange-light); }
-    .hero-sub {
-      display: flex; align-items: flex-start; gap: 3rem;
-      margin-top: 2rem;
-      animation: fadeUp 0.7s 0.16s ease both;
-    }
-    .hero-desc {
-      font-size: 1rem; color: var(--text2);
-      line-height: 1.85; max-width: 420px;
-    }
-    .hero-desc strong { color: var(--text); }
-    .hero-divider { width: 1px; background: var(--border2); align-self: stretch; flex-shrink: 0; }
-    .hero-meta {
-      display: flex; flex-direction: column; gap: 1.25rem;
-      padding-top: 0.25rem;
-    }
-    .hero-meta-item {
-      display: flex; flex-direction: column; gap: 0.2rem;
-    }
-    .hero-meta-label {
-      font-family: var(--font-mono); font-size: 0.68rem;
-      color: var(--text3); letter-spacing: 0.15em; text-transform: uppercase;
-    }
-    .hero-meta-val { font-size: 0.92rem; font-weight: 500; color: var(--text); }
-    .hero-meta-val.accent { color: var(--blue-light); }
-
-    .hero-cta {
-      display: flex; gap: 1rem; margin-top: 3.5rem;
-      animation: fadeUp 0.7s 0.24s ease both;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.85rem 2rem; font-family: var(--font-body);
-      font-size: 0.84rem; font-weight: 600; text-decoration: none;
-      border-radius: var(--radius); letter-spacing: 0.04em;
-      transition: all 0.22s;
-    }
-    .btn-blue {
-      background: linear-gradient(135deg, var(--blue), #0050d8);
-      color: #fff;
-      box-shadow: 0 0 30px rgba(26,107,255,0.3);
-    }
-    .btn-blue:hover { transform: translateY(-3px); box-shadow: 0 6px 36px rgba(26,107,255,0.45); }
-    .btn-ghost {
-      border: 1px solid var(--border2); color: var(--text2);
-    }
-    .btn-ghost:hover { border-color: rgba(255,107,26,0.5); color: var(--orange-light); }
-    .btn-cv-hero {
-      background: linear-gradient(135deg, var(--orange), #d44a00);
-      color: #fff;
-      box-shadow: 0 0 24px rgba(255,107,26,0.25);
-    }
-    .btn-cv-hero:hover { transform: translateY(-3px); box-shadow: 0 6px 32px rgba(255,107,26,0.4); }
-
-    .hero-links {
-      display: flex; gap: 1.5rem; margin-top: 1.5rem;
-      animation: fadeUp 0.7s 0.3s ease both;
-    }
-    .hero-links a {
-      font-family: var(--font-mono); font-size: 0.76rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--text3); text-decoration: none; transition: color 0.2s;
-    }
-    .hero-links a:hover { color: var(--blue-light); }
-
-    /* ─── FLOATING CARD ─── */
-    .hero-card {
-      position: absolute; right: 3rem; top: 50%;
-      transform: translateY(-50%);
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-radius: 8px; padding: 1.5rem;
-      width: 240px;
-      animation: floatCard 6s ease-in-out infinite;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px var(--blue-glow);
-    }
-    @keyframes floatCard {
-      0%,100% { transform: translateY(-50%) translateY(0); }
-      50% { transform: translateY(-50%) translateY(-12px); }
-    }
-    .hero-card-title { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text3); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
-    .skill-pill {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      font-size: 0.72rem; padding: 0.3rem 0.6rem;
-      border-radius: 2px; margin: 0.2rem;
-      font-family: var(--font-mono); font-weight: 400;
-    }
-    .pill-blue { background: rgba(26,107,255,0.15); color: var(--blue-light); border: 1px solid rgba(26,107,255,0.2); }
-    .pill-orange { background: rgba(255,107,26,0.15); color: var(--orange-light); border: 1px solid rgba(255,107,26,0.2); }
-    .pill-yellow { background: rgba(255,210,26,0.12); color: var(--yellow-light); border: 1px solid rgba(255,210,26,0.2); }
-    .hero-card-code {
-      margin-top: 1rem; padding: 0.75rem;
-      background: rgba(0,0,0,0.3); border-radius: 4px;
-      font-family: var(--font-mono); font-size: 0.66rem;
-      line-height: 1.7; color: var(--text3);
-    }
-    .hero-card-code .c-blue { color: var(--blue-light); }
-    .hero-card-code .c-orange { color: var(--orange-light); }
-    .hero-card-code .c-yellow { color: var(--yellow-light); }
-    .hero-card-code .c-green { color: #52d9a0; }
-
-    /* ─── ABOUT ─── */
-    #about {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem; align-items: start;
-    }
-    .section-eyebrow {
-      display: flex; align-items: center; gap: 0.75rem;
-      font-family: var(--font-mono); font-size: 0.74rem;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--orange); margin-bottom: 1.5rem;
-    }
-    .section-eyebrow::before { content: '//'; opacity: 0.5; }
-    h2.section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3.5vw, 3.2rem);
-      font-weight: 700; line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-    .about-text {
-      font-size: 0.98rem; color: var(--text2);
-      line-height: 1.95; margin-top: 1.5rem;
-    }
-    .about-text strong { color: var(--text); }
-    .about-text + .about-text { margin-top: 0.85rem; }
-
-    .about-location {
-      display: flex; align-items: center; gap: 0.6rem;
-      margin-top: 2rem; font-size: 0.85rem; color: var(--text3);
-      font-family: var(--font-mono);
-    }
-    .about-location .loc-pin { color: var(--orange); }
-
-    .stats-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-    }
-    .stat {
-      background: var(--surface);
-      padding: 2.5rem 2rem;
-      position: relative; overflow: hidden;
-      transition: background 0.25s;
-    }
-    .stat::after {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--orange));
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-    .stat:hover::after { transform: scaleX(1); }
-    .stat:hover { background: var(--surface2); }
-    .stat-num {
-      font-family: var(--font-display);
-      font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700; line-height: 1;
-      background: linear-gradient(135deg, var(--blue-light), var(--orange));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .stat-label {
-      font-family: var(--font-mono); font-size: 0.72rem;
-      color: var(--text3); letter-spacing: 0.12em;
-      text-transform: uppercase; margin-top: 0.5rem;
-    }
-
-    /* ─── SKILLS ─── */
-    #skills {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-    }
-    .skills-head { margin-bottom: 4rem; }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border);
-    }
-    .skill-card {
-      background: var(--surface);
-      padding: 2.5rem 2rem;
-      position: relative; overflow: hidden;
-      transition: background 0.25s;
-    }
-    .skill-card:hover { background: var(--surface2); }
-    .skill-card::before {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, var(--blue), var(--orange), var(--yellow));
-      opacity: 0; transition: opacity 0.3s;
-    }
-    .skill-card:hover::before { opacity: 1; }
-    .skill-icon-wrap {
-      width: 44px; height: 44px; border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; margin-bottom: 1.25rem;
-    }
-    .icon-blue { background: rgba(26,107,255,0.12); border: 1px solid rgba(26,107,255,0.2); }
-    .icon-orange { background: rgba(255,107,26,0.12); border: 1px solid rgba(255,107,26,0.2); }
-    .icon-yellow { background: rgba(255,210,26,0.1); border: 1px solid rgba(255,210,26,0.2); }
-    .icon-purple { background: rgba(130,80,255,0.12); border: 1px solid rgba(130,80,255,0.2); }
-    .skill-name {
-      font-family: var(--font-display);
-      font-size: 1.05rem; font-weight: 600;
-      margin-bottom: 0.75rem;
-    }
-    .skill-list {
-      font-size: 0.82rem; color: var(--text2);
-      line-height: 2; font-family: var(--font-mono);
-    }
-    .skill-list .tag-inline {
-      display: inline-block;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border2);
-      padding: 0.1rem 0.4rem; border-radius: 2px;
-      margin: 0.1rem;
-    }
-    .skill-list .tag-inline.main {
-      background: rgba(26,107,255,0.14); border-color: rgba(26,107,255,0.35);
-      color: var(--text);
-    }
-    .skill-sub {
-      font-family: var(--font-mono); font-size: 0.68rem;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--orange-light); margin-bottom: 0.25rem;
-    }
-    .skill-sub.alt { color: var(--text3); margin-top: 1rem; }
-
-    /* ─── PARCOURS ─── */
-    #experience {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-    }
-    .exp-head { margin-bottom: 4rem; }
-    .timeline { position: relative; padding-left: 2.5rem; }
-    .timeline::before {
-      content: ''; position: absolute; left: 0; top: 0.4rem; bottom: 0; width: 1px;
-      background: linear-gradient(180deg, var(--blue), var(--orange), transparent);
-    }
-    .timeline-item { position: relative; padding-bottom: 3rem; }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-item::before {
-      content: ''; position: absolute; left: calc(-2.5rem - 4px); top: 0.35rem;
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--bg); border: 2px solid var(--orange);
-    }
-    .exp-period {
-      font-family: var(--font-mono); font-size: 0.74rem;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--blue-light); margin-bottom: 0.5rem;
-    }
-    .exp-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
-      font-weight: 700; letter-spacing: -0.02em;
-    }
-    .exp-company { font-size: 0.9rem; color: var(--text2); margin-top: 0.25rem; }
-    .exp-list { list-style: none; margin-top: 0.85rem; max-width: 720px; }
-    .exp-list li {
-      font-size: 0.92rem; color: var(--text2); line-height: 1.75;
-      padding-left: 1.1rem; position: relative;
-    }
-    .exp-list li::before { content: '›'; position: absolute; left: 0; color: var(--orange); }
-    .exp-list strong { color: var(--text); font-weight: 600; }
-    .edu-title {
-      font-family: var(--font-display); font-size: clamp(1.3rem, 2.5vw, 1.8rem);
-      font-weight: 700; letter-spacing: -0.02em; margin: 4.5rem 0 1.5rem;
-    }
-    .edu-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
-      gap: 1px; background: var(--border); border: 1px solid var(--border);
-    }
-    .edu-card { background: var(--surface); padding: 1.75rem; }
-    .edu-name { font-family: var(--font-display); font-size: 1.02rem; font-weight: 600; line-height: 1.35; }
-    .edu-school { font-size: 0.86rem; color: var(--text2); margin-top: 0.35rem; }
-
-    /* ─── PROJECTS ─── */
-    #projects {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-    }
-    .projects-head { margin-bottom: 4rem; }
-    .project-item {
-      display: grid;
-      grid-template-columns: 60px 1fr auto;
-      align-items: start; gap: 2rem;
-      padding: 2rem 1.5rem;
-      border-top: 1px solid var(--border);
-      transition: all 0.25s;
-      position: relative; overflow: hidden;
-    }
-    .project-item::before {
-      content: ''; position: absolute;
-      left: 0; top: 0; bottom: 0; width: 2px;
-      background: linear-gradient(180deg, var(--blue), var(--orange));
-      transform: scaleY(0); transform-origin: bottom;
-      transition: transform 0.3s ease;
-    }
-    .project-item:hover::before { transform: scaleY(1); }
-    .project-item:last-child { border-bottom: 1px solid var(--border); }
-    .project-item:hover { background: rgba(255,255,255,0.018); padding-left: 2rem; }
-    .project-num {
-      font-family: var(--font-display);
-      font-size: 0.82rem; font-weight: 700;
-      color: var(--text3); transition: color 0.25s;
-      letter-spacing: 0.05em;
-    }
-    .project-item:hover .project-num { color: var(--orange); }
-    .project-name {
-      font-family: var(--font-display);
-      font-size: clamp(1.1rem, 2.2vw, 1.7rem);
-      font-weight: 700; letter-spacing: -0.02em;
-      margin-bottom: 0.3rem;
-    }
-    .project-desc { font-size: 0.92rem; color: var(--text2); line-height: 1.7; margin-bottom: 0.6rem; max-width: 720px; }
-    .project-context {
-      font-family: var(--font-mono); font-size: 0.72rem;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--orange-light); margin-bottom: 0.6rem;
-    }
-    .project-facts { display: grid; gap: 0.3rem; margin-bottom: 0.9rem; max-width: 720px; }
-    .project-facts div { font-size: 0.9rem; color: var(--text2); line-height: 1.7; }
-    .project-facts b { color: var(--text); font-weight: 600; }
-    .project-info.has-shot { display: flex; gap: 1.75rem; align-items: flex-start; }
-    .project-body { min-width: 0; }
-    .project-shot { flex-shrink: 0; width: 130px; position: relative; }
-    .project-shot img { display: block; width: 100%; height: auto; }
-    .project-shot.raw img { border-radius: 14px; border: 1px solid var(--border2); }
-    /* capture recadrée sur l'écran de l'application */
-    .project-shot.crop { aspect-ratio: 310 / 635; overflow: hidden; border-radius: 14px; border: 1px solid var(--border2); }
-    .project-shot.crop img { position: absolute; width: 200%; max-width: none; left: -51.6%; top: -63.8%; }
-    .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .tag {
-      font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 0.22rem 0.6rem;
-      border: 1px solid var(--border2); color: var(--text3);
-      border-radius: 2px; font-family: var(--font-mono);
-      transition: all 0.2s;
-    }
-    .project-item:hover .tag { border-color: rgba(26,107,255,0.3); color: var(--blue-light); }
-    .project-link {
-      color: var(--text3); text-decoration: none;
-      font-size: 1.1rem; transition: all 0.2s;
-      display: inline-flex; align-items: center;
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid var(--border2);
-      justify-content: center;
-    }
-    .project-item:hover .project-link {
-      color: var(--yellow); border-color: var(--yellow);
-      transform: translate(3px,-3px);
-      background: rgba(255,210,26,0.08);
-    }
-
-    /* ─── TÉMOIGNAGES ─── */
-    #testimonials {
-      padding: 8rem 3rem;
-      border-top: 1px solid var(--border);
-    }
-    .testi-head { margin-bottom: 4rem; }
-    .testi-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
-      gap: 1px; background: var(--border); border: 1px solid var(--border);
-    }
-    .testi-card { background: var(--surface); padding: 2rem; }
-    .testi-quote { font-size: 0.98rem; color: var(--text); line-height: 1.8; font-style: italic; }
-    .testi-quote::before { content: '“'; color: var(--orange); font-size: 1.6rem; line-height: 0; vertical-align: -0.35em; margin-right: 0.2rem; }
-    .testi-author { display: flex; align-items: center; gap: 0.75rem; margin-top: 1.5rem; }
-    .testi-avatar {
-      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(26,107,255,0.14); border: 1px solid rgba(26,107,255,0.3);
-      color: var(--blue-light); font-family: var(--font-display); font-size: 0.8rem; font-weight: 700;
-    }
-    .testi-name { font-size: 0.92rem; font-weight: 600; }
-    .testi-role { font-size: 0.82rem; color: var(--text2); margin-top: 0.1rem; }
-
-    /* ─── CONTACT ─── */
-    #contact {
-      padding: 8rem 3rem 6rem;
-      border-top: 1px solid var(--border);
-    }
-    .contact-inner { max-width: 760px; margin: 0 auto; text-align: center; }
-    .contact-big {
-      font-family: var(--font-display);
-      font-size: clamp(3rem, 7vw, 6.5rem);
-      font-weight: 700; letter-spacing: -0.04em; line-height: 1.0;
-      margin: 2rem 0;
-    }
-    .contact-big .grad {
-      background: linear-gradient(135deg, var(--blue) 0%, var(--orange) 50%, var(--yellow) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .contact-desc { font-size: 0.98rem; color: var(--text2); line-height: 1.85; max-width: 460px; margin: 0 auto 2.5rem; }
-    .contact-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .contact-email-badge {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      padding: 1rem 1.75rem;
-      border: 1px solid var(--border2);
-      border-radius: var(--radius);
-      color: var(--text); text-decoration: none;
-      font-size: 0.85rem; font-weight: 500;
-      transition: all 0.22s;
-      background: var(--surface);
-    }
-    .contact-email-badge:hover {
-      border-color: var(--blue);
-      background: rgba(26,107,255,0.08);
-      transform: translateY(-2px);
-    }
-    .social-links {
-      display: flex; justify-content: center; gap: 1rem; margin-top: 3rem;
-    }
-    .social-link {
-      color: var(--text3); text-decoration: none;
-      font-size: 0.76rem; letter-spacing: 0.15em;
-      text-transform: uppercase; font-family: var(--font-mono);
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.6rem 1.1rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: all 0.2s;
-    }
-    .social-link:hover { color: var(--blue-light); border-color: rgba(26,107,255,0.3); background: rgba(26,107,255,0.05); }
-
-    /* ─── CV SECTION ─── */
-    .cv-section {
-      margin-top: 4rem;
-      padding: 2rem;
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-radius: 8px;
-      position: relative; overflow: hidden;
-    }
-    .cv-section::before {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--orange), var(--yellow));
-    }
-    .cv-section-title {
-      font-family: var(--font-mono); font-size: 0.72rem;
-      color: var(--text3); letter-spacing: 0.18em; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .cv-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
-    .cv-info { font-size: 0.9rem; color: var(--text2); }
-    .cv-info span { color: var(--text); font-weight: 500; }
-    .btn-download {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      padding: 0.9rem 1.8rem;
-      background: linear-gradient(135deg, var(--orange) 0%, #d44a00 100%);
-      color: #fff; font-weight: 600; font-size: 0.78rem;
-      text-decoration: none; border-radius: var(--radius);
-      box-shadow: 0 0 28px rgba(255,107,26,0.3);
-      transition: all 0.22s;
-      letter-spacing: 0.03em;
-    }
-    .btn-download:hover { transform: translateY(-3px); box-shadow: 0 6px 36px rgba(255,107,26,0.45); }
-    .btn-download svg { width: 16px; height: 16px; }
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem 3rem;
-      display: flex; justify-content: space-between; align-items: center;
-      position: relative; z-index: 1;
-    }
-    .footer-left { font-size: 0.74rem; color: var(--text3); font-family: var(--font-mono); letter-spacing: 0.1em; }
-    .footer-right { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; color: var(--text3); font-family: var(--font-mono); }
-    .footer-dot { color: var(--orange); }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    /* masqué seulement si le JS est là pour le révéler */
-    .js .reveal {
-      opacity: 0; transform: translateY(40px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .js .reveal.visible { opacity: 1; transform: none; }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { animation: none !important; transition: none !important; }
-      .js .reveal { opacity: 1; transform: none; }
-    }
-
-    /* ─── SCROLLBAR ─── */
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border2); }
-    ::-webkit-scrollbar-thumb:hover { background: var(--blue); }
-
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 1200px) {
-      .hero-card { display: none; }
-    }
-    @media (max-width: 900px) {
-      nav { padding: 1rem 1.5rem; }
-      nav ul { display: none; }
-      .hamburger { display: flex; }
-      #hero { padding: 6rem 1.5rem 3rem; }
-      .hero-title { font-size: clamp(2.8rem, 13vw, 6rem); }
-      .hero-sub { flex-direction: column; gap: 2rem; }
-      .hero-divider { display: none; }
-      .hero-meta { flex-direction: row; flex-wrap: wrap; gap: 1.25rem 2rem; }
-      .hero-cta { flex-wrap: wrap; }
-      #about { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
-      #skills, #experience, #projects, #testimonials, #contact { padding: 5rem 1.5rem; }
-      .stat { padding: 1.5rem 1.25rem; }
-      .timeline { padding-left: 1.5rem; }
-      .timeline-item::before { left: calc(-1.5rem - 4px); }
-      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
-    }
-    @media (max-width: 600px) {
-      .nav-logo .badge { display: none; }
-      .project-item { grid-template-columns: 1fr auto; gap: 1rem; padding: 1.75rem 0.5rem; }
-      .project-item:hover { padding-left: 0.5rem; }
-      .project-num { display: none; }
-      .project-info.has-shot { flex-direction: column; gap: 1.25rem; }
-      .project-shot { width: 150px; }
-      .social-links { flex-wrap: wrap; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/site.css" />
 </head>
 <body>
 
@@ -809,56 +68,35 @@
 <main>
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-availability">
-    <span class="pulse"></span>
-    Ouvert aux opportunités — CDI · Freelance · Remote
-  </div>
+  <div class="hero-availability" data-pf="availability"><!--pf:availability--><span class="pulse"></span> Ouvert aux opportunités — CDI · Freelance · Remote<!--/pf:availability--></div>
   <h1 class="hero-title">
-    <span class="name-line">Marc-Aurèle</span>
-    <span class="role-line">Développeur.</span>
+    <span class="name-line" data-pf="name"><!--pf:name-->Marc-Aurèle<!--/pf:name--></span>
+    <span class="role-line" data-pf="headline"><!--pf:headline-->Développeur.<!--/pf:headline--></span>
   </h1>
-  <p class="hero-role">Full-Stack Web &amp; Mobile — <span>Flutter · Laravel · Next.js</span></p>
+  <p class="hero-role" data-pf="role"><!--pf:role-->Full-Stack Web &amp; Mobile — <span>Flutter · Laravel · Next.js</span><!--/pf:role--></p>
   <div class="hero-sub">
-    <p class="hero-desc">
-      <strong>3 ans d'expérience</strong>, de l'analyse du besoin à la mise en production. J'ai dirigé la technique d'applications mobiles utilisées par <strong>plus de 35 000 personnes</strong> dans une dizaine de pays d'Afrique.
-    </p>
+    <p class="hero-desc" data-pf="heroDesc"><!--pf:heroDesc--><strong>3 ans d&#39;expérience</strong>, de l&#39;analyse du besoin à la mise en production. J&#39;ai dirigé la technique d&#39;applications mobiles utilisées par <strong>plus de 35 000 personnes</strong> dans une dizaine de pays d&#39;Afrique.<!--/pf:heroDesc--></p>
     <div class="hero-divider"></div>
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">Localisation</span>
-        <span class="hero-meta-val">Abidjan, Côte d'Ivoire</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">Entreprise</span>
-        <span class="hero-meta-val accent">Afrik Novatech</span>
-      </div>
-      <div class="hero-meta-item">
-        <span class="hero-meta-label">Expérience</span>
-        <span class="hero-meta-val">3 ans · 10+ projets livrés</span>
-      </div>
-    </div>
+    <div class="hero-meta" data-pf="heroMeta"><!--pf:heroMeta--><div class="hero-meta-item"><span class="hero-meta-label">Localisation</span><span class="hero-meta-val">Abidjan, Côte d&#39;Ivoire</span></div><div class="hero-meta-item"><span class="hero-meta-label">Entreprise</span><span class="hero-meta-val accent">Afrik Novatech</span></div><div class="hero-meta-item"><span class="hero-meta-label">Expérience</span><span class="hero-meta-val">3 ans · 10+ projets livrés</span></div><!--/pf:heroMeta--></div>
   </div>
   <div class="hero-cta">
     <a href="#projects" class="btn btn-blue">Voir mes projets →</a>
     <a href="assets/CV_Adou_Marc-Aurele_DevFullStack.pdf" download="Marc-Aurele-Adou-CV.pdf" class="btn btn-cv-hero">↓ Mon CV</a>
     <a href="#contact" class="btn btn-ghost">Me contacter</a>
   </div>
-  <div class="hero-links">
-    <a href="https://www.linkedin.com/in/marc-aur%C3%A8le-adou-5860532b1/" target="_blank" rel="noopener noreferrer">⟶ LinkedIn</a>
-    <a href="https://github.com/marcdevfullstack-cloud" target="_blank" rel="noopener noreferrer">⟶ GitHub</a>
-  </div>
+  <div class="hero-links" data-pf="heroLinks"><!--pf:heroLinks--><a href="https://www.linkedin.com/in/marc-aur%C3%A8le-adou-5860532b1/" target="_blank" rel="noopener noreferrer">⟶ LinkedIn</a><a href="https://github.com/marcdevfullstack-cloud" target="_blank" rel="noopener noreferrer">⟶ GitHub</a><!--/pf:heroLinks--></div>
 
   <!-- Floating Code Card -->
   <div class="hero-card" aria-hidden="true">
     <div class="hero-card-title">// tech stack</div>
-    <div>
+    <div class="hero-pills" data-pf="heroPills"><!--pf:heroPills-->
       <span class="skill-pill pill-blue">Flutter</span>
       <span class="skill-pill pill-orange">Laravel</span>
       <span class="skill-pill pill-blue">Next.js</span>
       <span class="skill-pill pill-yellow">Firebase</span>
       <span class="skill-pill pill-orange">MySQL</span>
       <span class="skill-pill pill-blue">API REST</span>
-    </div>
+    <!--/pf:heroPills--></div>
     <div class="hero-card-code">
       <span class="c-blue">const</span> dev = {<br>
       &nbsp;&nbsp;name: <span class="c-green">'Marc-Aurèle'</span>,<br>
@@ -873,441 +111,79 @@
 <section id="about">
   <div class="reveal">
     <div class="section-eyebrow">À propos</div>
-    <h2 class="section-title">Du besoin métier<br>à la mise en production.</h2>
-    <p class="about-text">
-      Développeur full-stack avec <strong>3 ans d'expérience</strong>, je conçois et développe des applications web et mobiles de bout en bout : architecture, API REST, bases de données, sécurité, publication sur l'App Store et le Play Store.
-    </p>
-    <p class="about-text">
-      Chez Daymond, j'ai occupé le rôle de <strong>Lead Technique</strong> : développement des applications, gestion de l'infrastructure de production et coordination de développeurs freelances. Je travaille aujourd'hui avec <strong>Afrik Novatech</strong>.
-    </p>
-    <p class="about-text">
-      Je suis ouvert à un poste en <strong>CDI</strong>, à des missions <strong>freelance</strong> et au travail <strong>à distance</strong>.
-    </p>
-    <div class="about-location">
-      <span class="loc-pin">◉</span>
-      Basé à Abidjan — collabore partout dans le monde
-    </div>
+    <h2 class="section-title" data-pf="aboutTitle"><!--pf:aboutTitle-->Du besoin métier<br>à la mise en production.<!--/pf:aboutTitle--></h2>
+    <div class="about-body" data-pf="aboutBody"><!--pf:aboutBody--><p class="about-text">Développeur full-stack avec <strong>3 ans d&#39;expérience</strong>, je conçois et développe des applications web et mobiles de bout en bout : architecture, API REST, bases de données, sécurité, publication sur l&#39;App Store et le Play Store.</p><p class="about-text">Chez Daymond, j&#39;ai occupé le rôle de <strong>Lead Technique</strong> : développement des applications, gestion de l&#39;infrastructure de production et coordination de développeurs freelances. Je travaille aujourd&#39;hui avec <strong>Afrik Novatech</strong>.</p><p class="about-text">Je suis ouvert à un poste en <strong>CDI</strong>, à des missions <strong>freelance</strong> et au travail <strong>à distance</strong>.</p><div class="about-location"><span class="loc-pin">◉</span> Basé à Abidjan — collabore partout dans le monde</div><!--/pf:aboutBody--></div>
   </div>
-  <div class="stats-grid reveal" style="transition-delay:0.12s">
-    <div class="stat">
-      <div class="stat-num">3</div>
-      <div class="stat-label">Années d'expérience</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">10+</div>
-      <div class="stat-label">Projets livrés</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">35k+</div>
-      <div class="stat-label">Utilisateurs des apps Daymond</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">300k+</div>
-      <div class="stat-label">Documents juridiques numérisés</div>
-    </div>
-  </div>
+  <div class="stats-grid reveal" style="transition-delay:0.12s" data-pf="stats"><!--pf:stats--><div class="stat"><div class="stat-num">3</div><div class="stat-label">Années d&#39;expérience</div></div><div class="stat"><div class="stat-num">10+</div><div class="stat-label">Projets livrés</div></div><div class="stat"><div class="stat-num">35k+</div><div class="stat-label">Utilisateurs des apps Daymond</div></div><div class="stat"><div class="stat-num">300k+</div><div class="stat-label">Documents juridiques numérisés</div></div><!--/pf:stats--></div>
 </section>
 
 <!-- SKILLS -->
 <section id="skills">
   <div class="skills-head reveal">
     <div class="section-eyebrow">Stack technique</div>
-    <h2 class="section-title">Ce avec quoi<br>je construis.</h2>
+    <h2 class="section-title" data-pf="skillsTitle"><!--pf:skillsTitle-->Ce avec quoi<br>je construis.<!--/pf:skillsTitle--></h2>
   </div>
-  <div class="skills-grid">
-    <div class="skill-card reveal">
-      <div class="skill-icon-wrap icon-blue" aria-hidden="true">⚡</div>
-      <div class="skill-name">Frontend | Mobile &amp; Web</div>
-      <div class="skill-sub">Stack principale</div>
-      <div class="skill-list">
-        <span class="tag-inline main">Flutter · Dart</span>
-        <span class="tag-inline main">Next.js</span>
-        <span class="tag-inline main">TypeScript</span>
-        <span class="tag-inline main">Tailwind CSS</span>
-      </div>
-      <div class="skill-sub alt">Aussi utilisé</div>
-      <div class="skill-list">
-        <span class="tag-inline">React</span>
-        <span class="tag-inline">Vue.js</span>
-        <span class="tag-inline">Angular</span>
-      </div>
-    </div>
-    <div class="skill-card reveal" style="transition-delay:0.08s">
-      <div class="skill-icon-wrap icon-orange" aria-hidden="true">🔧</div>
-      <div class="skill-name">Backend | Mobile &amp; Web</div>
-      <div class="skill-sub">Stack principale</div>
-      <div class="skill-list">
-        <span class="tag-inline main">Laravel · PHP</span>
-        <span class="tag-inline main">API REST</span>
-        <span class="tag-inline main">Paiements Wave · CinetPay</span>
-      </div>
-      <div class="skill-sub alt">Aussi utilisé</div>
-      <div class="skill-list">
-        <span class="tag-inline">FastAPI</span>
-        <span class="tag-inline">Python</span>
-        <span class="tag-inline">Node.js</span>
-        <span class="tag-inline">GraphQL</span>
-        <span class="tag-inline">WebSockets</span>
-        <span class="tag-inline">API Claude (Anthropic)</span>
-      </div>
-    </div>
-    <div class="skill-card reveal" style="transition-delay:0.16s">
-      <div class="skill-icon-wrap icon-yellow" aria-hidden="true">🗄️</div>
-      <div class="skill-name">Base de données</div>
-      <div class="skill-sub">Stack principale</div>
-      <div class="skill-list">
-        <span class="tag-inline main">MySQL</span>
-        <span class="tag-inline main">Firebase</span>
-      </div>
-      <div class="skill-sub alt">Aussi utilisé</div>
-      <div class="skill-list">
-        <span class="tag-inline">PostgreSQL</span>
-        <span class="tag-inline">SQL Server</span>
-        <span class="tag-inline">SQLite</span>
-        <span class="tag-inline">MongoDB</span>
-      </div>
-    </div>
-    <div class="skill-card reveal" style="transition-delay:0.24s">
-      <div class="skill-icon-wrap icon-purple" aria-hidden="true">☁️</div>
-      <div class="skill-name">DevOps &amp; Cloud</div>
-      <div class="skill-sub">Stack principale</div>
-      <div class="skill-list">
-        <span class="tag-inline main">App Store · Play Store</span>
-        <span class="tag-inline main">AWS S3</span>
-        <span class="tag-inline main">GitHub Actions · CI/CD</span>
-      </div>
-      <div class="skill-sub alt">Aussi utilisé</div>
-      <div class="skill-list">
-        <span class="tag-inline">Vercel</span>
-        <span class="tag-inline">Railway</span>
-        <span class="tag-inline">Docker</span>
-        <span class="tag-inline">Cloudinary</span>
-      </div>
-    </div>
-  </div>
+  <div class="skills-grid" data-pf="skills"><!--pf:skills--><div class="skill-card"><div class="skill-icon-wrap icon-blue" aria-hidden="true">⚡</div><div class="skill-name">Frontend | Mobile &amp; Web</div><div class="skill-sub">Stack principale</div><div class="skill-list"><span class="tag-inline main">Flutter · Dart</span> <span class="tag-inline main">Next.js</span> <span class="tag-inline main">TypeScript</span> <span class="tag-inline main">Tailwind CSS</span></div><div class="skill-sub alt">Aussi utilisé</div><div class="skill-list"><span class="tag-inline">React</span> <span class="tag-inline">Vue.js</span> <span class="tag-inline">Angular</span></div></div><div class="skill-card"><div class="skill-icon-wrap icon-orange" aria-hidden="true">🔧</div><div class="skill-name">Backend | Mobile &amp; Web</div><div class="skill-sub">Stack principale</div><div class="skill-list"><span class="tag-inline main">Laravel · PHP</span> <span class="tag-inline main">API REST</span> <span class="tag-inline main">Paiements Wave · CinetPay</span></div><div class="skill-sub alt">Aussi utilisé</div><div class="skill-list"><span class="tag-inline">FastAPI</span> <span class="tag-inline">Python</span> <span class="tag-inline">Node.js</span> <span class="tag-inline">GraphQL</span> <span class="tag-inline">WebSockets</span> <span class="tag-inline">API Claude (Anthropic)</span></div></div><div class="skill-card"><div class="skill-icon-wrap icon-yellow" aria-hidden="true">🗄️</div><div class="skill-name">Base de données</div><div class="skill-sub">Stack principale</div><div class="skill-list"><span class="tag-inline main">MySQL</span> <span class="tag-inline main">Firebase</span></div><div class="skill-sub alt">Aussi utilisé</div><div class="skill-list"><span class="tag-inline">PostgreSQL</span> <span class="tag-inline">SQL Server</span> <span class="tag-inline">SQLite</span> <span class="tag-inline">MongoDB</span></div></div><div class="skill-card"><div class="skill-icon-wrap icon-purple" aria-hidden="true">☁️</div><div class="skill-name">DevOps &amp; Cloud</div><div class="skill-sub">Stack principale</div><div class="skill-list"><span class="tag-inline main">App Store · Play Store</span> <span class="tag-inline main">AWS S3</span> <span class="tag-inline main">GitHub Actions · CI/CD</span></div><div class="skill-sub alt">Aussi utilisé</div><div class="skill-list"><span class="tag-inline">Vercel</span> <span class="tag-inline">Railway</span> <span class="tag-inline">Docker</span> <span class="tag-inline">Cloudinary</span></div></div><!--/pf:skills--></div>
 </section>
 
 <!-- PARCOURS -->
 <section id="experience">
   <div class="exp-head reveal">
     <div class="section-eyebrow">Parcours</div>
-    <h2 class="section-title">Expérience<br>&amp; formation.</h2>
+    <h2 class="section-title" data-pf="experienceTitle"><!--pf:experienceTitle-->Expérience<br>&amp; formation.<!--/pf:experienceTitle--></h2>
   </div>
-  <div class="timeline">
-    <div class="timeline-item reveal">
-      <div class="exp-period">Actuellement</div>
-      <div class="exp-title">Développeur Full-Stack</div>
-      <div class="exp-company">Afrik Novatech · Abidjan, CI</div>
-      <ul class="exp-list">
-        <li>Développement d'<strong>Olave App</strong>, application mobile de gestion de lavage (Flutter, API Laravel, notifications push).</li>
-        <li>Réalisation du site vitrine de l'entreprise.</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="exp-period">2026 · Freelance</div>
-      <div class="exp-title">Développeur Full-Stack</div>
-      <div class="exp-company">INSFS · Abidjan, CI</div>
-      <ul class="exp-list">
-        <li>Application web de gestion des inscriptions (Next.js, API Laravel, MySQL), déployée en continu sur Vercel et Railway.</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="exp-period">Mai 2025 — Septembre 2026 · CDI</div>
-      <div class="exp-title">Développeur Full-Stack &amp; Lead Technique</div>
-      <div class="exp-company">DAYMOND · Abidjan, CI</div>
-      <ul class="exp-list">
-        <li>Conception et développement des applications de l'entreprise : <strong>Distribution, Fournisseur, Agent Commercial, Agent Commercial IA (WhatsApp Shop), marketplace ChopChap, plateforme Admin</strong>.</li>
-        <li>Mise en place et maintenance des API backend, administration et optimisation des bases de données.</li>
-        <li>Intégration des solutions de paiement <strong>Wave</strong> et <strong>CinetPay</strong>.</li>
-        <li>Publication et maintenance sur l'App Store et le Play Store, gestion des environnements de production.</li>
-        <li>Coordination et suivi des projets confiés à des développeurs freelances.</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="exp-period">Novembre 2024 — Avril 2025 · CDD</div>
-      <div class="exp-title">Développeur Full-Stack &amp; Support IT</div>
-      <div class="exp-company">SPA-CI · Abidjan, CI</div>
-      <ul class="exp-list">
-        <li>Développement de solutions internes : site internet, outils d'automatisation.</li>
-        <li>Support IT et formation aux outils numériques pour 10 utilisateurs et partenaires.</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="exp-period">Janvier — Février 2025 · Freelance</div>
-      <div class="exp-title">Développeur Full-Stack</div>
-      <div class="exp-company">Nappes et Designs · Abidjan, CI</div>
-      <ul class="exp-list">
-        <li>Création du site e-commerce nappesetdesigns.com, <strong>livré en 6 semaines</strong>.</li>
-        <li>Conception de la base de données relationnelle et sécurisation des données sensibles.</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="exp-period">Septembre — Octobre 2024 · Freelance</div>
-      <div class="exp-title">Développeur Full-Stack — Dématérialisation</div>
-      <div class="exp-company">Groupe Défis et Stratégies · Gagnoa, CI</div>
-      <ul class="exp-list">
-        <li>Numérisation de <strong>plus de 300 000 documents juridiques</strong> dans une base de données sécurisée.</li>
-        <li>Mise en place du traitement, de l'indexation et de la recherche par OCR, dans le respect des contraintes de confidentialité.</li>
-      </ul>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="exp-period">Septembre 2023 — Avril 2024 · Stage</div>
-      <div class="exp-title">Développeur Full-Stack &amp; Support IT</div>
-      <div class="exp-company">Elite MultiMedia · Abidjan, CI</div>
-      <ul class="exp-list">
-        <li>Réalisation et maintenance du site de l'entreprise, participation au développement du CRM interne.</li>
-        <li>Administration des bases de données MySQL et support IT pour 50 utilisateurs.</li>
-      </ul>
-    </div>
-  </div>
+  <div class="timeline" data-pf="timeline"><!--pf:timeline--><div class="timeline-item"><div class="exp-period">Actuellement</div><div class="exp-title">Développeur Full-Stack</div><div class="exp-company">Afrik Novatech · Abidjan, CI</div><ul class="exp-list"><li>Développement d&#39;<strong>Olave App</strong>, application mobile de gestion de lavage (Flutter, API Laravel, notifications push).</li><li>Réalisation du site vitrine de l&#39;entreprise.</li></ul></div><div class="timeline-item"><div class="exp-period">2026 · Freelance</div><div class="exp-title">Développeur Full-Stack</div><div class="exp-company">INSFS · Abidjan, CI</div><ul class="exp-list"><li>Application web de gestion des inscriptions (Next.js, API Laravel, MySQL), déployée en continu sur Vercel et Railway.</li></ul></div><div class="timeline-item"><div class="exp-period">Mai 2025 — Septembre 2026 · CDI</div><div class="exp-title">Développeur Full-Stack &amp; Lead Technique</div><div class="exp-company">DAYMOND · Abidjan, CI</div><ul class="exp-list"><li>Conception et développement des applications de l&#39;entreprise : <strong>Distribution, Fournisseur, Agent Commercial, Agent Commercial IA (WhatsApp Shop), marketplace ChopChap, plateforme Admin</strong>.</li><li>Mise en place et maintenance des API backend, administration et optimisation des bases de données.</li><li>Intégration des solutions de paiement <strong>Wave</strong> et <strong>CinetPay</strong>.</li><li>Publication et maintenance sur l&#39;App Store et le Play Store, gestion des environnements de production.</li><li>Coordination et suivi des projets confiés à des développeurs freelances.</li></ul></div><div class="timeline-item"><div class="exp-period">Novembre 2024 — Avril 2025 · CDD</div><div class="exp-title">Développeur Full-Stack &amp; Support IT</div><div class="exp-company">SPA-CI · Abidjan, CI</div><ul class="exp-list"><li>Développement de solutions internes : site internet, outils d&#39;automatisation.</li><li>Support IT et formation aux outils numériques pour 10 utilisateurs et partenaires.</li></ul></div><div class="timeline-item"><div class="exp-period">Janvier — Février 2025 · Freelance</div><div class="exp-title">Développeur Full-Stack</div><div class="exp-company">Nappes et Designs · Abidjan, CI</div><ul class="exp-list"><li>Création du site e-commerce nappesetdesigns.com, <strong>livré en 6 semaines</strong>.</li><li>Conception de la base de données relationnelle et sécurisation des données sensibles.</li></ul></div><div class="timeline-item"><div class="exp-period">Septembre — Octobre 2024 · Freelance</div><div class="exp-title">Développeur Full-Stack — Dématérialisation</div><div class="exp-company">Groupe Défis et Stratégies · Gagnoa, CI</div><ul class="exp-list"><li>Numérisation de <strong>plus de 300 000 documents juridiques</strong> dans une base de données sécurisée.</li><li>Mise en place du traitement, de l&#39;indexation et de la recherche par OCR, dans le respect des contraintes de confidentialité.</li></ul></div><div class="timeline-item"><div class="exp-period">Septembre 2023 — Avril 2024 · Stage</div><div class="exp-title">Développeur Full-Stack &amp; Support IT</div><div class="exp-company">Elite MultiMedia · Abidjan, CI</div><ul class="exp-list"><li>Réalisation et maintenance du site de l&#39;entreprise, participation au développement du CRM interne.</li><li>Administration des bases de données MySQL et support IT pour 50 utilisateurs.</li></ul></div><!--/pf:timeline--></div>
 
   <h3 class="edu-title reveal">Formation</h3>
-  <div class="edu-grid reveal">
-    <div class="edu-card">
-      <div class="exp-period">2025 — 2026</div>
-      <div class="edu-name">Licence Professionnelle — Génie Logiciel</div>
-      <div class="edu-school">Groupe Sup' Formation · Abidjan</div>
-    </div>
-    <div class="edu-card">
-      <div class="exp-period">2022 — 2023</div>
-      <div class="edu-name">BTS Informatique — Développeur d'Application</div>
-      <div class="edu-school">École Supérieure de Commerce · Abidjan</div>
-    </div>
-    <div class="edu-card">
-      <div class="exp-period">Langues</div>
-      <div class="edu-name">Français — courant</div>
-      <div class="edu-school">Anglais — notions</div>
-    </div>
-  </div>
+  <div class="edu-grid reveal" data-pf="education"><!--pf:education--><div class="edu-card"><div class="exp-period">2025 — 2026</div><div class="edu-name">Licence Professionnelle — Génie Logiciel</div><div class="edu-school">Groupe Sup&#39; Formation · Abidjan</div></div><div class="edu-card"><div class="exp-period">2022 — 2023</div><div class="edu-name">BTS Informatique — Développeur d&#39;Application</div><div class="edu-school">École Supérieure de Commerce · Abidjan</div></div><div class="edu-card"><div class="exp-period">Langues</div><div class="edu-name">Français — courant</div><div class="edu-school">Anglais — notions</div></div><!--/pf:education--></div>
 </section>
 
 <!-- PROJECTS -->
 <section id="projects">
   <div class="projects-head reveal">
     <div class="section-eyebrow">Projets</div>
-    <h2 class="section-title">Ce que j'ai<br>construit.</h2>
+    <h2 class="section-title" data-pf="projectsTitle"><!--pf:projectsTitle-->Ce que j'ai<br>construit.<!--/pf:projectsTitle--></h2>
   </div>
 
-  <div class="project-item reveal">
-    <div class="project-num">01</div>
-    <div class="project-info has-shot">
-      <div class="project-shot raw"><img src="assets/project-daymond-distribution.jpg" alt="Écran d'accueil de l'application Daymond Distribution" width="540" height="1069" loading="lazy" /></div>
-      <div class="project-body">
-        <div class="project-name">Daymond Distribution</div>
-        <div class="project-context">Application mobile · Daymond · Lead Technique</div>
-        <div class="project-desc">Application mobile disponible dans une dizaine de pays africains — permet à des revendeurs de commercialiser des produits sans contrainte logistique ni administrative.</div>
-        <div class="project-facts">
-          <div><b>Mon rôle —</b> développement de l'application Flutter et de l'API Laravel, notifications push, stockage des médias, publication sur les stores.</div>
-          <div><b>Résultat —</b> plus de 35 000 utilisateurs sur les applications Daymond.</div>
-        </div>
-        <div class="project-tags">
-          <span class="tag">Flutter</span>
-          <span class="tag">Laravel · API · MySQL</span>
-          <span class="tag">Firebase FCM</span>
-          <span class="tag">AWS S3</span>
-        </div>
-      </div>
-    </div>
-    <a href="https://play.google.com/store/apps/details?id=com.daymondboutique.distribution_frontend" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Daymond Distribution sur le Play Store (nouvel onglet)">↗</a>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">02</div>
-    <div class="project-info has-shot">
-      <div class="project-shot crop"><img src="assets/project-collaboration.png" alt="Écran de bienvenue de l'application Daymond Collaboration" width="620" height="1262" loading="lazy" /></div>
-      <div class="project-body">
-        <div class="project-name">Daymond Collaboration</div>
-        <div class="project-context">Application mobile · Daymond · Lead Technique</div>
-        <div class="project-desc">Plateforme dédiée aux collaborateurs de la société Daymond — gestion interne, notifications temps réel et communication unifiée.</div>
-        <div class="project-facts">
-          <div><b>Mon rôle —</b> développement de l'application Flutter et de l'API Laravel, notifications temps réel, publication sur les stores.</div>
-        </div>
-        <div class="project-tags">
-          <span class="tag">Flutter</span>
-          <span class="tag">Firebase FCM</span>
-          <span class="tag">Twilio</span>
-          <span class="tag">Laravel · API · MySQL</span>
-          <span class="tag">AWS S3</span>
-        </div>
-      </div>
-    </div>
-    <a href="https://play.google.com/store/apps/details?id=com.innovat.daymond_collaboration_app" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Daymond Collaboration sur le Play Store (nouvel onglet)">↗</a>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">03</div>
-    <div class="project-info has-shot">
-      <div class="project-shot"><img src="assets/project-chopchap.png" alt="Page d'accueil de la marketplace ChopChap sur mobile" width="620" height="1262" loading="lazy" /></div>
-      <div class="project-body">
-        <div class="project-name">ChopChap</div>
-        <div class="project-context">Marketplace e-commerce · Daymond · Lead Technique</div>
-        <div class="project-desc">Marketplace e-commerce en ligne, avec déploiement CI/CD automatisé via GitHub Actions.</div>
-        <div class="project-facts">
-          <div><b>Mon rôle —</b> développement de l'application web et de son API, mise en place du déploiement continu.</div>
-        </div>
-        <div class="project-tags">
-          <span class="tag">FastAPI</span>
-          <span class="tag">Tailwind CSS</span>
-          <span class="tag">CI/CD</span>
-          <span class="tag">GitHub Actions</span>
-        </div>
-      </div>
-    </div>
-    <a href="https://chopchap.com/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Voir le site ChopChap (nouvel onglet)">↗</a>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">04</div>
-    <div class="project-info has-shot">
-      <div class="project-shot"><img src="assets/project-whatsappshop.png" alt="Liste des conversations dans WhatsApp Shop" width="620" height="1262" loading="lazy" /></div>
-      <div class="project-body">
-        <div class="project-name">WhatsApp Shop — Agent IA</div>
-        <div class="project-context">Agent commercial IA · Daymond · Lead Technique</div>
-        <div class="project-desc">Plateforme d'agent commercial IA qui converse avec les clients, crée et gère leurs commandes.</div>
-        <div class="project-facts">
-          <div><b>Mon rôle —</b> développement de la plateforme (front Next.js, API Laravel) et intégration de l'IA Claude d'Anthropic pour la conversation et la prise de commande.</div>
-        </div>
-        <div class="project-tags">
-          <span class="tag">Next.js</span>
-          <span class="tag">Laravel</span>
-          <span class="tag">Claude · Anthropic</span>
-          <span class="tag">Tailwind CSS</span>
-        </div>
-      </div>
-    </div>
-    <span></span>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">05</div>
-    <div class="project-info has-shot">
-      <div class="project-shot"><img src="assets/project-nappesetdesigns.png" alt="Page d'accueil de la boutique Nappes et Designs sur mobile" width="620" height="1263" loading="lazy" /></div>
-      <div class="project-body">
-        <div class="project-name">Nappes &amp; Designs</div>
-        <div class="project-context">Site e-commerce · Freelance</div>
-        <div class="project-desc">Boutique en ligne spécialisée dans la vente de nappes de table — interface produit complète avec gestion de catalogue.</div>
-        <div class="project-facts">
-          <div><b>Mon rôle —</b> création du site, conception de la base de données et sécurisation des données clients.</div>
-          <div><b>Résultat —</b> site responsive livré en 6 semaines.</div>
-        </div>
-        <div class="project-tags">
-          <span class="tag">Laravel</span>
-          <span class="tag">Tailwind CSS</span>
-          <span class="tag">MySQL</span>
-        </div>
-      </div>
-    </div>
-    <a href="https://nappesetdesigns.com/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Voir le site Nappes et Designs (nouvel onglet)">↗</a>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">06</div>
-    <div class="project-info">
-      <div class="project-name">INSFS — Gestion des inscriptions</div>
-      <div class="project-context">Application web · Freelance</div>
-      <div class="project-desc">Application web de gestion des inscriptions de l'INSFS-Abidjan — déploiement full CI/CD sur Vercel et Railway.</div>
-      <div class="project-facts">
-        <div><b>Mon rôle —</b> développement du front Next.js et de l'API Laravel, mise en place du déploiement continu.</div>
-      </div>
-      <div class="project-tags">
-        <span class="tag">Next.js</span>
-        <span class="tag">Laravel · API · MySQL</span>
-        <span class="tag">Tailwind CSS</span>
-        <span class="tag">Vercel · Railway</span>
-      </div>
-    </div>
-    <a href="https://insfs-gestion.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Voir l'application INSFS (nouvel onglet)">↗</a>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">07</div>
-    <div class="project-info has-shot">
-      <div class="project-shot"><img src="assets/project-olave.png" alt="Page d'accueil d'Olave sur mobile" width="400" height="815" loading="lazy" /></div>
-      <div class="project-body">
-        <div class="project-name">Olave App — by Afrik Novatech</div>
-        <div class="project-context">Application mobile · Afrik Novatech</div>
-        <div class="project-desc">Application mobile de gestion de lavage intelligent — suivi des commandes, notifications push et tableau de bord opérateur.</div>
-        <div class="project-tags">
-          <span class="tag">Flutter · Dart</span>
-          <span class="tag">Laravel · API REST · MySQL</span>
-          <span class="tag">Infomaniak</span>
-          <span class="tag">Cloudinary</span>
-          <span class="tag">FCM Push</span>
-          </div>
-    </div>
-    </div>
-    <a href="https://olave-ci.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Voir Olave App (nouvel onglet)">↗</a>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">08</div>
-    <div class="project-info">
-      <div class="project-name">Dématérialisation d'archives juridiques</div>
-      <div class="project-context">Système documentaire · Freelance · Groupe Défis et Stratégies</div>
-      <div class="project-desc">Numérisation et structuration d'un fonds de documents juridiques pour le rendre consultable et exploitable.</div>
-      <div class="project-facts">
-        <div><b>Mon rôle —</b> mise en place du traitement, de l'indexation et de la recherche par OCR dans une base de données sécurisée.</div>
-        <div><b>Résultat —</b> plus de 300 000 documents numérisés, dans le respect des contraintes de confidentialité.</div>
-      </div>
-      <div class="project-tags">
-        <span class="tag">OCR</span>
-        <span class="tag">Indexation</span>
-        <span class="tag">Base de données sécurisée</span>
-      </div>
-    </div>
-    <span></span>
-  </div>
-
-  <div class="project-item reveal">
-    <div class="project-num">09</div>
-    <div class="project-info has-shot">
-      <div class="project-shot"><img src="assets/project-afriknovatech.png" alt="Page d'accueil du site Afrik Novatech sur mobile" width="400" height="815" loading="lazy" /></div>
-      <div class="project-body">
-        <div class="project-name">Afrik Novatech — Landing Page</div>
-        <div class="project-context">Site vitrine · Afrik Novatech</div>
-        <div class="project-desc">Site vitrine officiel d'Afrik Novatech présentant les services et l'expertise de l'équipe.</div>
-        <div class="project-tags">
-          <span class="tag">Web</span>
-          </div>
-    </div>
-    </div>
-    <a href="https://www.afriknovatech.com/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Voir le site Afrik Novatech (nouvel onglet)">↗</a>
-  </div>
+  <div class="project-list" data-pf="projects"><!--pf:projects--><div class="project-item"><div class="project-num">01</div><div class="project-info has-shot"><div class="project-shot raw"><img src="assets/project-daymond-distribution.jpg" alt="Capture du projet Daymond Distribution" loading="lazy" /></div><div class="project-body"><div class="project-name">Daymond Distribution</div><div class="project-context">Application mobile · Daymond · Lead Technique</div><div class="project-desc">Application mobile disponible dans une dizaine de pays africains — permet à des revendeurs de commercialiser des produits sans contrainte logistique ni administrative.</div><div class="project-facts"><div><b>Mon rôle —</b> développement de l&#39;application Flutter et de l&#39;API Laravel, notifications push, stockage des médias, publication sur les stores.</div><div><b>Résultat —</b> plus de 35 000 utilisateurs sur les applications Daymond.</div></div><div class="project-tags"><span class="tag">Flutter</span><span class="tag">Laravel · API · MySQL</span><span class="tag">Firebase FCM</span><span class="tag">AWS S3</span></div></div></div><a href="https://play.google.com/store/apps/details?id=com.daymondboutique.distribution_frontend" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ouvrir Daymond Distribution dans un nouvel onglet">↗</a></div><div class="project-item"><div class="project-num">02</div><div class="project-info has-shot"><div class="project-shot crop"><img src="assets/project-collaboration.png" alt="Capture du projet Daymond Collaboration" loading="lazy" /></div><div class="project-body"><div class="project-name">Daymond Collaboration</div><div class="project-context">Application mobile · Daymond · Lead Technique</div><div class="project-desc">Plateforme dédiée aux collaborateurs de la société Daymond — gestion interne, notifications temps réel et communication unifiée.</div><div class="project-facts"><div><b>Mon rôle —</b> développement de l&#39;application Flutter et de l&#39;API Laravel, notifications temps réel, publication sur les stores.</div></div><div class="project-tags"><span class="tag">Flutter</span><span class="tag">Firebase FCM</span><span class="tag">Twilio</span><span class="tag">Laravel · API · MySQL</span><span class="tag">AWS S3</span></div></div></div><a href="https://play.google.com/store/apps/details?id=com.innovat.daymond_collaboration_app" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ouvrir Daymond Collaboration dans un nouvel onglet">↗</a></div><div class="project-item"><div class="project-num">03</div><div class="project-info has-shot"><div class="project-shot"><img src="assets/project-chopchap.png" alt="Capture du projet ChopChap" loading="lazy" /></div><div class="project-body"><div class="project-name">ChopChap</div><div class="project-context">Marketplace e-commerce · Daymond · Lead Technique</div><div class="project-desc">Marketplace e-commerce en ligne, avec déploiement CI/CD automatisé via GitHub Actions.</div><div class="project-facts"><div><b>Mon rôle —</b> développement de l&#39;application web et de son API, mise en place du déploiement continu.</div></div><div class="project-tags"><span class="tag">FastAPI</span><span class="tag">Tailwind CSS</span><span class="tag">CI/CD</span><span class="tag">GitHub Actions</span></div></div></div><a href="https://chopchap.com/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ouvrir ChopChap dans un nouvel onglet">↗</a></div><div class="project-item"><div class="project-num">04</div><div class="project-info has-shot"><div class="project-shot"><img src="assets/project-whatsappshop.png" alt="Capture du projet WhatsApp Shop — Agent IA" loading="lazy" /></div><div class="project-body"><div class="project-name">WhatsApp Shop — Agent IA</div><div class="project-context">Agent commercial IA · Daymond · Lead Technique</div><div class="project-desc">Plateforme d&#39;agent commercial IA qui converse avec les clients, crée et gère leurs commandes.</div><div class="project-facts"><div><b>Mon rôle —</b> développement de la plateforme (front Next.js, API Laravel) et intégration de l&#39;IA Claude d&#39;Anthropic pour la conversation et la prise de commande.</div></div><div class="project-tags"><span class="tag">Next.js</span><span class="tag">Laravel</span><span class="tag">Claude · Anthropic</span><span class="tag">Tailwind CSS</span></div></div></div><span></span></div><div class="project-item"><div class="project-num">05</div><div class="project-info has-shot"><div class="project-shot"><img src="assets/project-nappesetdesigns.png" alt="Capture du projet Nappes &amp; Designs" loading="lazy" /></div><div class="project-body"><div class="project-name">Nappes &amp; Designs</div><div class="project-context">Site e-commerce · Freelance</div><div class="project-desc">Boutique en ligne spécialisée dans la vente de nappes de table — interface produit complète avec gestion de catalogue.</div><div class="project-facts"><div><b>Mon rôle —</b> création du site, conception de la base de données et sécurisation des données clients.</div><div><b>Résultat —</b> site responsive livré en 6 semaines.</div></div><div class="project-tags"><span class="tag">Laravel</span><span class="tag">Tailwind CSS</span><span class="tag">MySQL</span></div></div></div><a href="https://nappesetdesigns.com/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ouvrir Nappes &amp; Designs dans un nouvel onglet">↗</a></div><div class="project-item"><div class="project-num">06</div><div class="project-info"><div class="project-name">INSFS — Gestion des inscriptions</div><div class="project-context">Application web · Freelance</div><div class="project-desc">Application web de gestion des inscriptions de l&#39;INSFS-Abidjan — déploiement full CI/CD sur Vercel et Railway.</div><div class="project-facts"><div><b>Mon rôle —</b> développement du front Next.js et de l&#39;API Laravel, mise en place du déploiement continu.</div></div><div class="project-tags"><span class="tag">Next.js</span><span class="tag">Laravel · API · MySQL</span><span class="tag">Tailwind CSS</span><span class="tag">Vercel · Railway</span></div></div><a href="https://insfs-gestion.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ouvrir INSFS — Gestion des inscriptions dans un nouvel onglet">↗</a></div><div class="project-item"><div class="project-num">07</div><div class="project-info has-shot"><div class="project-shot"><img src="assets/project-olave.png" alt="Capture du projet Olave App — by Afrik Novatech" loading="lazy" /></div><div class="project-body"><div class="project-name">Olave App — by Afrik Novatech</div><div class="project-context">Application mobile · Afrik Novatech</div><div class="project-desc">Application mobile de gestion de lavage intelligent — suivi des commandes, notifications push et tableau de bord opérateur.</div><div class="project-tags"><span class="tag">Flutter · Dart</span><span class="tag">Laravel · API REST · MySQL</span><span class="tag">Infomaniak</span><span class="tag">Cloudinary</span><span class="tag">FCM Push</span></div></div></div><a href="https://olave-ci.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ouvrir Olave App — by Afrik Novatech dans un nouvel onglet">↗</a></div><div class="project-item"><div class="project-num">08</div><div class="project-info"><div class="project-name">Dématérialisation d&#39;archives juridiques</div><div class="project-context">Système documentaire · Freelance · Groupe Défis et Stratégies</div><div class="project-desc">Numérisation et structuration d&#39;un fonds de documents juridiques pour le rendre consultable et exploitable.</div><div class="project-facts"><div><b>Mon rôle —</b> mise en place du traitement, de l&#39;indexation et de la recherche par OCR dans une base de données sécurisée.</div><div><b>Résultat —</b> plus de 300 000 documents numérisés, dans le respect des contraintes de confidentialité.</div></div><div class="project-tags"><span class="tag">OCR</span><span class="tag">Indexation</span><span class="tag">Base de données sécurisée</span></div></div><span></span></div><div class="project-item"><div class="project-num">09</div><div class="project-info has-shot"><div class="project-shot"><img src="assets/project-afriknovatech.png" alt="Capture du projet Afrik Novatech — Landing Page" loading="lazy" /></div><div class="project-body"><div class="project-name">Afrik Novatech — Landing Page</div><div class="project-context">Site vitrine · Afrik Novatech</div><div class="project-desc">Site vitrine officiel d&#39;Afrik Novatech présentant les services et l&#39;expertise de l&#39;équipe.</div><div class="project-tags"><span class="tag">Web</span></div></div></div><a href="https://www.afriknovatech.com/" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Ouvrir Afrik Novatech — Landing Page dans un nouvel onglet">↗</a></div><!--/pf:projects--></div>
 </section>
 
 <!-- TÉMOIGNAGES (affichés seulement s'il y en a dans Supabase) -->
 <section id="testimonials" hidden>
   <div class="testi-head">
     <div class="section-eyebrow">Témoignages</div>
-    <h2 class="section-title">Ce qu'ils disent<br>de mon travail.</h2>
+    <h2 class="section-title" data-pf="testimonialsTitle"><!--pf:testimonialsTitle-->Ce qu'ils disent<br>de mon travail.<!--/pf:testimonialsTitle--></h2>
   </div>
-  <div class="testi-grid"></div>
+  <div class="testi-grid" data-pf="testimonials"><!--pf:testimonials--><!--/pf:testimonials--></div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner reveal">
     <div class="section-eyebrow" style="justify-content:center">Contact</div>
-    <div class="contact-big">
+    <div class="contact-big" data-pf="contactTitle"><!--pf:contactTitle-->
       Travaillons<br><span class="grad">ensemble.</span>
-    </div>
-    <p class="contact-desc">
-      Un poste en CDI, une mission freelance ou un projet à distance ? Parlons de ce que vous construisez.
-    </p>
-    <div class="contact-actions">
-      <a href="mailto:marcdevfullstack@gmail.com" class="contact-email-badge">
-        ✉ marcdevfullstack@gmail.com
-      </a>
-    </div>
+    <!--/pf:contactTitle--></div>
+    <p class="contact-desc" data-pf="contactDesc"><!--pf:contactDesc-->Un poste en CDI, une mission freelance ou un projet à distance ? Parlons de ce que vous construisez.<!--/pf:contactDesc--></p>
+    <div class="contact-actions" data-pf="contactActions"><!--pf:contactActions--><a href="mailto:marcdevfullstack@gmail.com" class="contact-email-badge">✉ marcdevfullstack@gmail.com</a><!--/pf:contactActions--></div>
+
+    <form id="contact-form" class="contact-form">
+      <div class="form-row">
+        <div class="form-group"><label for="c-name">Nom</label><input id="c-name" name="name" type="text" maxlength="120" autocomplete="name" required /></div>
+        <div class="form-group"><label for="c-email">E-mail</label><input id="c-email" name="email" type="email" maxlength="200" autocomplete="email" required /></div>
+      </div>
+      <div class="form-group"><label for="c-company">Entreprise (facultatif)</label><input id="c-company" name="company" type="text" maxlength="160" autocomplete="organization" /></div>
+      <div class="form-group"><label for="c-message">Message</label><textarea id="c-message" name="message" maxlength="5000" required></textarea></div>
+      <div class="hp" aria-hidden="true"><label>Ne pas remplir <input name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+      <button type="submit">Envoyer le message →</button>
+      <p class="form-status" role="status"></p>
+    </form>
 
     <!-- CV DOWNLOAD BLOCK -->
     <div class="cv-section">
       <div class="cv-section-title">// Curriculum Vitae</div>
       <div class="cv-row">
-        <div class="cv-info">
-          <span>Marc-Aurèle Adou</span> — Développeur Full-Stack &amp; Mobile<br>
-          <span style="color:var(--text3);font-size:0.8rem;font-family:var(--font-mono)">PDF · Mis à jour 2026</span>
-        </div>
+        <div class="cv-info" data-pf="cvInfo"><!--pf:cvInfo--><span>Marc-Aurèle Adou</span> — Développeur Full-Stack &amp; Mobile<br><span class="cv-updated">PDF · Mis à jour 2026</span><!--/pf:cvInfo--></div>
         <a href="assets/CV_Adou_Marc-Aurele_DevFullStack.pdf" download="Marc-Aurele-Adou-CV.pdf" class="btn-download">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -1319,19 +195,14 @@
       </div>
     </div>
 
-    <div class="social-links">
-      <a href="https://github.com/marcdevfullstack-cloud" target="_blank" rel="noopener noreferrer" class="social-link">⟶ GitHub</a>
-      <a href="https://www.linkedin.com/in/marc-aur%C3%A8le-adou-5860532b1/" target="_blank" rel="noopener noreferrer" class="social-link">⟶ LinkedIn</a>
-    </div>
+    <div class="social-links" data-pf="socialLinks"><!--pf:socialLinks--><a href="https://www.linkedin.com/in/marc-aur%C3%A8le-adou-5860532b1/" target="_blank" rel="noopener noreferrer" class="social-link">⟶ LinkedIn</a><a href="https://github.com/marcdevfullstack-cloud" target="_blank" rel="noopener noreferrer" class="social-link">⟶ GitHub</a><!--/pf:socialLinks--></div>
   </div>
 </section>
 </main>
 
 <footer>
-  <div class="footer-left">© 2026 — Marc-Aurèle Adou</div>
-  <div class="footer-right">
-    Développeur Full-Stack <span class="footer-dot">◉</span> Afrik Novatech
-  </div>
+  <div class="footer-left" data-pf="footerLeft"><!--pf:footerLeft-->© 2026 — Marc-Aurèle Adou<!--/pf:footerLeft--></div>
+  <div class="footer-right" data-pf="footerRight"><!--pf:footerRight-->Développeur Full-Stack <span class="footer-dot">◉</span> Afrik Novatech<!--/pf:footerRight--></div>
 </footer>
 
 <script>
@@ -1404,6 +275,7 @@
   }, { passive: true });
 </script>
 <script src="js/config.js"></script>
+<script src="js/render.js"></script>
 <script src="js/site.js"></script>
 </body>
 </html>
